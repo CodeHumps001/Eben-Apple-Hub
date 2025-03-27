@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installment Calculator</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">
+        <img src="./logo.png" alt="Logo" />
+      </div>
+      <div class="call">
+        <a href="./index.html"><i class="bx bx-home"></i></a>
+      </div>
+    </div>
+    <section>
+      <div class="fill">
+        <div class="fill-form">
+          <form action="">
+            <h1>Installment Plan</h1>
+            <label for="tamount">Total amount:</label>
+            <input
+              type="number"
+              class="total"
+              placeholder="Enter product amount"
+              required
+            />
+            <label for="tamount">Down Payment:</label>
+            <input
+              type="number"
+              class="down"
+              placeholder="Enter down payment here"
+              required
+            />
+            <label for="">Payment Schedules:</label>
+            <input
+              type="text"
+              class="opt"
+              name=""
+              id=""
+              placeholder="daily, weekly or monthly"
+            />
+            <button type="submit" class="calc">Calculate</button>
+          </form>
+          <div class="display-plan">
+            <h1 class="dplan plan">GHC</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let calculate = document.querySelector(".calc");
+
+      calculate.addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent form submission
+
+        let total = Number(document.querySelector(".total").value);
+        let down = Number(document.querySelector(".down").value);
+        let option = document.querySelector(".opt").value.toLowerCase(); // Convert to lowercase
+        let planElement = document.querySelector(".plan");
+
+        if (total < down) {
+          planElement.textContent =
+            "Down payment cannot be greater than total!";
+          return;
+        }
+
+        let amountDue = 0;
+        if (option === "daily") {
+          amountDue = (total - down) / 90;
+        } else if (option === "weekly") {
+          amountDue = (total - down) / 12;
+        } else if (option === "monthly") {
+          amountDue = (total - down) / 3;
+        } else {
+          planElement.textContent = "Please select a valid option.";
+          return;
+        }
+
+        planElement.textContent = `GHC ${amountDue.toFixed(2)} ${option}`;
+        console.log("Calculated amount:", amountDue);
+      });
+    </script>
+  </body>
+</html>
